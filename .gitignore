@@ -1,13 +1,8 @@
 
-/frontend/node_modules/
-/frontend/package-lock.json
-/frontend/.idea/
-/frontend/.vscode/
-
-
-/backend/node_modules/
-/backend/.idea/
-/backend/.vscode/
-/backend/dist/
-/backend/combined.log
-/backend/package-lock.json
+node_modules/
+package-lock.json
+.idea/
+.vscode/
+dist/
+combined.log
+package-lock.json

@@ -1,8 +1,0 @@
-.fit-logo {
-  height: 30px;
-  width: 50px;
-}
-
-.app-bg-color {
-  @apply bg-blue-500;
-}
