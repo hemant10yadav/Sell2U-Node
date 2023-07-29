@@ -6,12 +6,11 @@ export default function corsMiddleware(
 	next: NextFunction
 ) {
 	res.setHeader('Access-Control-Allow-Origin', '*');
-	/*res.setHeader(
+	res.setHeader(
 		'Access-Control-Allow-Methods',
 		'OPTIONS, GET, POST, PUT, PATCH, DELETE'
-	);*/
-	//res.setHeader('Access-Control-Allow-Headers', 'Authorization');
+	);
+	res.setHeader('Access-Control-Allow-Headers', 'Authorization');
 	res.end();
-	console.log(res.getHeaders());
 	next();
 }

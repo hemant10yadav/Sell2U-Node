@@ -1,45 +1,45 @@
 {
-  "env": {
-    "browser": true,
-    "commonjs": true,
-    "es2021": true
-  },
-  "overrides": [],
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ],
-  "plugins": ["prettier"],
-  "parser": "@typescript-eslint/parser",
-    "rules": {
-        "linebreak-style": "off",
-        "prettier/prettier": [
-            "error",
-            {
-              "printWidth": 80,
-              "endOfLine": "auto",
-              "singleQuote": true,
-              "tabWidth": 2,
-              "useTabs": true,
-              "trailingComma": "es5"
-            }
-        ],
-        "@typescript-eslint/no-explicit-any": "warn",
-        "@typescript-eslint/ban-types": [
-            "error",
-            {
-                "extendDefaults": true,
-                "types": {
-                    "{}": false
-                }
-            }
-        ],
-        // Enforce the use of the shorthand syntax.
-        "object-shorthand": "error",
-        "no-console": "warn"
-    }
+	"env": {
+		"browser": true,
+		"commonjs": true,
+		"es2021": true
+	},
+	"overrides": [],
+	"parserOptions": {
+		"project": "./tsconfig.json"
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"prettier"
+	],
+	"plugins": ["prettier"],
+	"parser": "@typescript-eslint/parser",
+	"rules": {
+		"linebreak-style": "off",
+		"prettier/prettier": [
+			"error",
+			{
+				"printWidth": 80,
+				"endOfLine": "auto",
+				"singleQuote": true,
+				"tabWidth": 2,
+				"useTabs": true,
+				"trailingComma": "es5"
+			}
+		],
+		"@typescript-eslint/no-explicit-any": "warn",
+		"@typescript-eslint/ban-types": [
+			"error",
+			{
+				"extendDefaults": true,
+				"types": {
+					"{}": false
+				}
+			}
+		],
+		// Enforce the use of the shorthand syntax.
+		"object-shorthand": "error",
+		"no-console": "warn"
+	}
 }

@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction, Errback } from 'express';
+import express, { Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import EnvConstants from './util/envConstants';
@@ -7,6 +7,8 @@ import Paths from './util/paths';
 import logger from './util/logger';
 import isAuthenticatedReq from './middleware/isAuthenticatedReq';
 import cors from 'cors';
+import usersRoute from './routes/usersRoute';
+import { StatusCode } from './util/enums';
 
 const app = express();
 
@@ -16,19 +18,15 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use(Paths.AUTH, authRoute);
-app.use(
-	'/user',
-	isAuthenticatedReq,
-	(req: express.Request, res: Response, next: NextFunction) => {
-		return res.status(200).json({ auth: true });
-	}
-);
+app.use(Paths.USERS, isAuthenticatedReq, usersRoute);
 
+// Handle all the errors.
 app.use((err: any, req: express.Request, res: Response, next: NextFunction) => {
+	logger.error(err?.message);
 	const error = {
-		status: err?.statusCode | 500,
+		status: err?.statusCode | StatusCode.INTERNAL_SERVER_ERROR,
 		error: err?.data,
-		message: err?.message,
+		message: err?.statusCode ? err?.message : 'Something went wrong',
 	};
 	res.status(error.status).json(error);
 });
@@ -41,5 +39,5 @@ mongoose
 		app.listen(3031);
 	})
 	.catch((err) => {
-		logger.error(`Error while connecting DB: ===> ${err.message}`);
+		logger.error(`Error while connecting DB: ===> ${err?.message}`);
 	});

@@ -1,10 +1,13 @@
-import Jwt, { TokenExpiredError } from 'jsonwebtoken';
+import Jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator/src/validation-result';
-import User from '../models/user';
+import User from '../models/User';
 import bcryptjs from 'bcryptjs';
 import EnvConstants from '../util/envConstants';
 import logger from '../util/logger';
+import { handleException } from '../services/ErrorHandler';
+import { StatusCode } from '../util/enums';
+import { IUser } from '../util/interfaces';
 
 export async function signup(
 	req: Request,
@@ -14,10 +17,11 @@ export async function signup(
 	try {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			const err: any = new Error('Validation error');
-			err.statusCode = 400;
-			err.data = errors.array();
-			throw err;
+			handleException(
+				StatusCode.BAD_REQUEST,
+				'Validation error',
+				errors.array()
+			);
 		}
 		const newUserData = new User({
 			firstName: req.body.firstName,
@@ -28,10 +32,8 @@ export async function signup(
 		});
 		logger.info(`Creating account for user with username ${req.body.username}`);
 		const user = await newUserData.save();
-		return res.status(200).json(user);
+		return res.status(StatusCode.CREATED).json(user);
 	} catch (err: any) {
-		logger.error(`Error while creating account for user ${err.message}`);
-		// Pass the error if exist to the next middleware
 		next(err);
 	}
 }
@@ -40,17 +42,15 @@ export async function login(
 	req: Request,
 	res: Response,
 	next: NextFunction
-): Promise<any> {
+): Promise<void> {
 	try {
 		const emailOrUsername = req.body.emailOrUsername;
 		const password = req.body.password;
-		const loadUser = await User.findOne({
+		const loadUser: IUser | null = await User.findOne({
 			$or: [{ email: emailOrUsername }, { username: emailOrUsername }],
 		});
 		if (!loadUser || !(await bcryptjs.compare(password, loadUser.password))) {
-			const error: any = new Error('Wrong credentials');
-			error.statusCode = 401;
-			throw error;
+			handleException(StatusCode.BAD_REQUEST, 'Wrong credentials');
 		}
 		const token: string = Jwt.sign(
 			{
@@ -58,17 +58,16 @@ export async function login(
 				userId: loadUser?._id.toString(),
 			},
 			EnvConstants.PASSWORD_ENCRYPTION_KEY,
-			{ expiresIn: '48h' }
+			{ expiresIn: EnvConstants.TOKEN_EXPIRATION_TIME }
 		);
 		const restUser = JSON.parse(JSON.stringify(loadUser));
 		delete restUser.password;
 		logger.info(`Login successfully done for ${req.body.emailOrUsername}`);
-		res.status(200).json({
+		res.status(StatusCode.OK).json({
 			token,
 			user: restUser,
 		});
 	} catch (err: any) {
-		logger.warn(`Error while login user ===> ${err.message}`);
 		next(err);
 	}
 }
@@ -77,7 +76,7 @@ export async function resetPassword(
 	req: Request,
 	res: Response,
 	next: NextFunction
-): Promise<any> {
+): Promise<void> {
 	try {
 		const emailOrUsername = req.body.emailOrUsername;
 		const loadUser = await User.findOne({
