@@ -26,7 +26,6 @@ const upload = multer({
 		file: Express.Multer.File,
 		cb: multer.FileFilterCallback
 	): void {
-		console.log(getMessage('productFieldError.name'));
 		if (
 			![FileType.PNG.toString(), FileType.JPEG.toString()].includes(
 				file?.mimetype

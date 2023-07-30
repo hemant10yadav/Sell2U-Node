@@ -20,11 +20,11 @@ const Product = new Schema(
 		},
 		quantity: { type: Number, required: true },
 		images: [{ type: String }],
-		// seller: {
-		// 	type: Schema.Types.ObjectId,
-		// 	ref: SchemaName.SELLER,
-		// 	required: true,
-		// },
+		seller: {
+			type: Schema.Types.ObjectId,
+			ref: SchemaName.USER,
+			required: true,
+		},
 	},
 	{ timestamps: true }
 );

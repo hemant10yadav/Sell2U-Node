@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import multer from 'multer';
-import * as path from 'path';
-import logger from '../util/logger';
 import { validationResult } from 'express-validator/src/validation-result';
 import { handleException } from '../services/ErrorHandler';
 import { StatusCode } from '../util/enums';
+import { getMessage } from '../configuration/message';
+import { IProduct } from '../util/interfaces';
+import Product from '../models/product';
+import logger from '../util/logger';
+import { Multer } from 'multer';
 
 export async function addProduct(
 	req: Request,
@@ -12,33 +14,25 @@ export async function addProduct(
 	next: NextFunction
 ) {
 	try {
-		const errors = validationResult(req);
+		const errors = validationResult(req.body);
+		const files = req.files as Express.Multer.File[];
 		if (!errors.isEmpty()) {
 			handleException(
 				StatusCode.BAD_REQUEST,
-				'Validation error',
+				getMessage('error.validationError'),
 				errors.array()
 			);
 		}
-
-		logger.error(req.file);
-		console.log('inside add product', req.body);
-		// const product: IProduct = req.body;
-		// const newProduct = new Product({ ...product });
-		// await newProduct.save();
+		const productData: Partial<IProduct> = req.body;
+		if (files.length > 0) {
+			productData.images = files.map(
+				(file: Express.Multer.File) => file.filename
+			);
+		}
+		const product = new Product(productData);
+		await product.validate();
+		await product.save();
 	} catch (e) {
 		next(e);
 	}
 }
-
-const storage = multer.diskStorage({
-	destination(req, file, cb) {
-		cb(null, 'uploads/products');
-	},
-	filename(req, file, cb) {
-		const uniqueFileName = Date.now() + path.extname(file.originalname);
-		cb(null, uniqueFileName);
-	},
-});
-
-const upload = multer({ storage: storage }).any();

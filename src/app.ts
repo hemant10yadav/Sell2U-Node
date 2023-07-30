@@ -27,7 +27,6 @@ app.use(Paths.USERS, isAuthenticatedReq, usersRoute);
 
 // Handle all the errors.
 app.use((err: any, req: express.Request, res: Response, next: NextFunction) => {
-	console.log('Error class name:', err.constructor.name);
 	if (err instanceof multer.MulterError) {
 		logger.error('INSTANCE OF multer.MulterError ');
 	}
