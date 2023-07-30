@@ -1,14 +1,16 @@
 import { Router } from 'express';
-import Paths from '../util/paths';
-import { addProduct } from '../controllers/productsCtrl';
-import upload from '../configuration/multer';
+import Paths from '../constants/paths';
+import { addProduct, getAllProducts } from '../controllers/productsCtrl';
+import upload from '../config/multer';
 import { body } from 'express-validator';
-import { getMessage } from '../configuration/message';
-import { ProductCategory, ProductSubCategory } from '../util/enums';
+import { ProductCategory, ProductSubCategory } from '../constants/enums';
 import isAuthenticatedReq from '../middleware/isAuthenticatedReq';
 import isSeller from '../middleware/isSeller';
+import { getMessage } from '../config/appUtil';
 
 const router: Router = Router();
+
+router.get('', getAllProducts);
 
 router.post(
 	Paths.ADD,

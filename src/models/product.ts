@@ -1,8 +1,9 @@
 import mongoose, { Schema } from 'mongoose';
-import { ProductSubCategory, ProductCategory, SchemaName } from '../util/enums';
+import { ProductSubCategory, ProductCategory, SchemaName } from '../constants/enums';
 
 const Product = new Schema(
 	{
+		productId: { type: Number, required: true, unique: true },
 		name: { type: String, required: true },
 		description: { type: String, required: true },
 		price: { type: Number, required: true },

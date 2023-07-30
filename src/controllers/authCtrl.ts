@@ -3,11 +3,12 @@ import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator/src/validation-result';
 import User from '../models/User';
 import bcryptjs from 'bcryptjs';
-import EnvConstants from '../util/envConstants';
-import logger from '../util/logger';
+import EnvConstants from '../constants/envConstants';
 import { handleException } from '../services/ErrorHandler';
-import { StatusCode } from '../util/enums';
-import { IUser } from '../util/interfaces';
+import { StatusCode } from '../constants/enums';
+import { IUser } from '../constants/interfaces';
+import Counter from '../models/Counter';
+import logger from '../config/appUtil';
 
 export async function signup(
 	req: Request,
@@ -32,7 +33,19 @@ export async function signup(
 			password: await bcryptjs.hash(req.body.password, 12),
 		});
 		logger.info(`Creating account for user with username ${req.body.username}`);
+
+		let counter = await Counter.findOne();
+		if (counter) {
+			newUserData.userId = counter.lastUserId + 1;
+			counter.lastUserId = newUserData.userId;
+		} else {
+			newUserData.userId = 1;
+			counter = new Counter();
+			counter.lastUserId = newUserData.userId;
+			counter.lastProductId = 0;
+		}
 		const user = await newUserData.save();
+		await counter.save();
 		return res.status(StatusCode.CREATED).json(user);
 	} catch (err: any) {
 		next(err);

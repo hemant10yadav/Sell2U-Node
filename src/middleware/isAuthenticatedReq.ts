@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { NextFunction, Response } from 'express';
-import EnvConstants from '../util/envConstants';
+import EnvConstants from '../constants/envConstants';
 import { handleException } from '../services/ErrorHandler';
-import { StatusCode } from '../util/enums';
+import { StatusCode } from '../constants/enums';
 
 export default function isAuthenticatedReq(
 	req: any,

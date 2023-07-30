@@ -71,6 +71,7 @@ export enum SchemaName {
 	USER = 'User',
 	SELLER = 'Seller',
 	ORDER = 'Order',
+	COUNTER = 'Counter'
 }
 
 export enum StatusCode {

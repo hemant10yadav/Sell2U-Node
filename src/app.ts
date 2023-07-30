@@ -1,16 +1,16 @@
 import express, { Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import EnvConstants from './util/envConstants';
+import EnvConstants from './constants/envConstants';
 import authRoute from './routes/authRoute';
-import Paths from './util/paths';
-import logger from './util/logger';
+import Paths from './constants/paths';
 import isAuthenticatedReq from './middleware/isAuthenticatedReq';
 import cors from 'cors';
 import usersRoute from './routes/usersRoute';
-import { StatusCode } from './util/enums';
+import { StatusCode } from './constants/enums';
 import productsRoute from './routes/productsRoute';
 import multer from 'multer';
+import logger from './config/appUtil';
 
 const app = express();
 

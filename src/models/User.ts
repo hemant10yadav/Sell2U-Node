@@ -1,8 +1,9 @@
 import mongoose, { Schema } from 'mongoose';
-import { Role, SchemaName } from '../util/enums';
+import { Role, SchemaName } from '../constants/enums';
 
 const User = new Schema(
 	{
+		userId: { type: Number, required: true, unique: true },
 		firstName: { type: String, required: true },
 		lastName: { type: String, required: true },
 		username: { type: String, required: true },

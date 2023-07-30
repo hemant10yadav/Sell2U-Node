@@ -1,9 +1,9 @@
 import { NextFunction, Response } from 'express';
 import User from '../models/User';
-import { IUser } from '../util/interfaces';
-import { Role, StatusCode } from '../util/enums';
+import { IUser } from '../constants/interfaces';
+import { Role, StatusCode } from '../constants/enums';
 import { handleException } from '../services/ErrorHandler';
-import logger from '../util/logger';
+import logger from '../config/appUtil';
 
 export default async function isSeller(
 	req: any,

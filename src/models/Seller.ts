@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { SchemaName } from '../util/enums';
+import { SchemaName } from '../constants/enums';
 
 const Schema = mongoose.Schema;
 

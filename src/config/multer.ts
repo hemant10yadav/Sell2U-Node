@@ -1,13 +1,15 @@
 import multer, { MulterError } from 'multer';
-import path from 'path';
 import { Request } from 'express';
-import { FileType, FileTypeError } from '../util/enums';
-import EnvConstants from '../util/envConstants';
-import { getMessage } from './message';
+import { FileType, FileTypeError } from '../constants/enums';
+import EnvConstants from '../constants/envConstants';
+import { getMessage, getRootPath } from './appUtil';
 
 const storage = multer.diskStorage({
 	destination(_req, _file, cb) {
-		const destinationPath = path.join(__dirname, '..', 'resources'); // Ensure 'uploads' folder in the same directory as the script
+		const destinationPath = getRootPath('public', 'resources'); // Ensure
+		// 'uploads'
+		// folder in the
+		// same directory as the script
 		cb(null, destinationPath);
 	},
 	filename(_req, file, cb) {

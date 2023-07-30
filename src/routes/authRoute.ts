@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { login, signup, resetPassword } from '../controllers/authCtrl';
 import { body } from 'express-validator';
 import User from '../models/User';
-import Paths from '../util/paths';
+import Paths from '../constants/paths';
 const router: Router = Router();
 
 router.post(

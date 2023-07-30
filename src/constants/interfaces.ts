@@ -3,6 +3,7 @@ import { ProductCategory, ProductSubCategory, Role } from './enums';
 import { Schema } from 'mongoose';
 
 export interface IUser {
+	userId: number;
 	firstName: string;
 	_id: Schema.Types.ObjectId;
 	lastName: string;
@@ -36,6 +37,7 @@ export interface IError extends Error {
 }
 
 export interface IProduct {
+	productId: number;
 	name: string;
 	description: string;
 	price: number;

@@ -1,8 +1,8 @@
 import { NextFunction, Response } from 'express';
 import User from '../models/User';
-import logger from '../util/logger';
 import { handleException } from '../services/ErrorHandler';
-import { StatusCode } from '../util/enums';
+import { StatusCode } from '../constants/enums';
+import logger from '../config/appUtil';
 
 export async function getCurrentUser(
 	req: any,
@@ -10,7 +10,6 @@ export async function getCurrentUser(
 	next: NextFunction
 ) {
 	try {
-		console.log(req.userId, req.username);
 		if (req.userId) {
 			const user = await User.findById(req.userId);
 			logger.error('user', user);

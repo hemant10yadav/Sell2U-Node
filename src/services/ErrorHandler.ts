@@ -1,4 +1,4 @@
-import { IError } from '../util/interfaces';
+import { IError } from '../constants/interfaces';
 
 export function handleException(
 	statusCode: number,
