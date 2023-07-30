@@ -1,0 +1,31 @@
+{
+	"error": {
+		"somethingWentWrong": "Something went wrong.",
+		"unauthorized": "Unauthorized: You are not authorized to access this resource.",
+		"forbidden": "Forbidden: You do not have permission to access this resource.",
+		"notFound": "Not Found: The requested resource was not found.",
+		"badRequest": "Bad Request: The request was malformed or invalid.",
+		"validationError": "Validation Error: The request data did not pass validation.",
+		"serverError": "Server Error: There was a problem with the server.",
+		"methodNotAllowed": "Method Not Allowed: The HTTP method used is not allowed for this resource.",
+		"tooManyRequests": "Too Many Requests: You have exceeded the rate limit for this API.",
+		"unsupportedMediaType": "Unsupported Media Type: The request content type is not supported.",
+		"unprocessableEntity": "Unprocessable Entity: The server understood the request but cannot process it.",
+		"conflict": "Conflict: The request conflicts with the current state of the resource.",
+		"internalServerError": "Internal Server Error: The server encountered an unexpected condition.",
+		"serviceUnavailable": "Service Unavailable: The server is currently unable to handle the request.",
+		"gatewayTimeout": "Gateway Timeout: The server did not receive a timely response from an upstream server.",
+		"notImplemented": "Not Implemented: The requested functionality is not implemented.",
+		"fileSizeExceeded": "File Limit Exceeded: File size should be below 1MB.",
+		"wrongFileType": "Wrong File Type: Only JPEG and PNG file types are allowed."
+	},
+	"productFieldError": {
+		"name": "The name field is required and must be between 5 and 50 characters long.",
+		"description": "The description field is required and must be between 10 and 200 characters long.",
+		"price": "The price field is required and must be a positive number.",
+		"category": "The category field is required and must be one of the valid categories.",
+		"subcategory": "The subcategory field is required and must be one of the valid subcategories.",
+		"quantity": "The quantity field is required and must be a positive integer."
+	}
+}
+

@@ -5,4 +5,5 @@ export default class Paths {
 	public static RESET_PASSWORD = '/reset-password';
 	public static USERS = '/users';
 	public static ADD = '/add';
+	public static Products = '/products';
 }

@@ -1,8 +1,41 @@
 import { Router } from 'express';
 import Paths from '../util/paths';
 import { addProduct } from '../controllers/productsCtrl';
-import isSeller from '../middleware/isSeller';
+import upload from '../configuration/multer';
+import { body } from 'express-validator';
+import { getMessage } from '../configuration/message';
+import { ProductCategory, ProductSubCategory } from '../util/enums';
 
 const router: Router = Router();
 
-router.post(Paths.ADD, isSeller, addProduct);
+router.post(
+	Paths.ADD,
+	upload.array('file'),
+	[
+		body('name')
+			.trim()
+			.isLength({ min: 5, max: 50 })
+			.withMessage(getMessage('productFieldError.name')),
+		body('description')
+			.trim()
+			.isLength({ min: 10, max: 200 })
+			.withMessage(getMessage('productFieldError.description')),
+		body('price')
+			.trim()
+			.isFloat({ gt: 0 })
+			.withMessage(getMessage('productFieldError.price')),
+		body('category')
+			.isIn(Object.values(ProductCategory))
+			.withMessage(getMessage('productFieldError.category')),
+		body('subcategory')
+			.trim()
+			.isIn(Object.values(ProductSubCategory))
+			.withMessage(getMessage('productFieldError.category')),
+		body('quantity')
+			.isInt({ gt: 0 })
+			.withMessage(getMessage('productFieldError.quantity')),
+	],
+	addProduct
+);
+
+export default router;

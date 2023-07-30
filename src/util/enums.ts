@@ -1,3 +1,5 @@
+import { ErrorCode } from 'multer';
+
 export enum ProductCategory {
 	ELECTRONICS = 'Electronics',
 	FASHION_AND_APPAREL = 'Fashion and Apparel',
@@ -83,4 +85,17 @@ export enum StatusCode {
 	SERVICE_UNAVAILABLE = 503,
 }
 
+export enum FileTypeError {
+	LIMIT_PART_COUNT = 'LIMIT_PART_COUNT',
+	LIMIT_FILE_SIZE = 'LIMIT_FILE_SIZE',
+	LIMIT_FILE_COUNT = 'LIMIT_FILE_COUNT',
+	LIMIT_FIELD_KEY = 'LIMIT_FIELD_KEY',
+	LIMIT_FIELD_VALUE = 'LIMIT_FIELD_VALUE',
+	LIMIT_FIELD_COUNT = 'LIMIT_FIELD_COUNT',
+	LIMIT_UNEXPECTED_FILE = 'LIMIT_UNEXPECTED_FILE',
+}
 
+export enum FileType {
+	JPEG = 'image/jpeg',
+	PNG = 'image/png',
+}

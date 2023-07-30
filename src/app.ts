@@ -9,6 +9,8 @@ import isAuthenticatedReq from './middleware/isAuthenticatedReq';
 import cors from 'cors';
 import usersRoute from './routes/usersRoute';
 import { StatusCode } from './util/enums';
+import productsRoute from './routes/productsRoute';
+import multer from 'multer';
 
 const app = express();
 
@@ -17,12 +19,19 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
+app.use(Paths.Products, productsRoute);
+
 app.use(Paths.AUTH, authRoute);
+
 app.use(Paths.USERS, isAuthenticatedReq, usersRoute);
 
 // Handle all the errors.
 app.use((err: any, req: express.Request, res: Response, next: NextFunction) => {
-	logger.error(err?.message);
+	console.log('Error class name:', err.constructor.name);
+	if (err instanceof multer.MulterError) {
+		logger.error('INSTANCE OF multer.MulterError ');
+	}
+	logger.error(err);
 	const error = {
 		status: err?.statusCode | StatusCode.INTERNAL_SERVER_ERROR,
 		error: err?.data,

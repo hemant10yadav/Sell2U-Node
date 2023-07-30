@@ -6,3 +6,4 @@ package-lock.json
 dist/
 combined.log
 package-lock.json
+src/resources/
