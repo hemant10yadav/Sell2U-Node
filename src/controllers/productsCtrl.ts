@@ -6,8 +6,8 @@ import { IProduct } from '../constants/interfaces';
 import Product from '../models/product';
 import { Schema } from 'mongoose';
 import Counter from '../models/Counter';
-import { dirname } from 'path';
 import logger, { getMessage } from '../config/appUtil';
+import Paths from '../constants/paths';
 
 export async function getAllProducts(
 	req: any,
@@ -15,13 +15,23 @@ export async function getAllProducts(
 	next: NextFunction
 ) {
 	try {
+		const imageBaseUrl = `${req.protocol}://${req.get('host')}/${
+			Paths.RESOURCES
+		}`;
 		const products = await Product.find();
-		// @ts-ignore
-		const appDir = dirname(require?.main.filename);
-		console.log('appDir', appDir);
+
+		const productsWithUrls = products.map((product: any) => {
+			// Map each image name to its corresponding image URL
+			const imageUrls = product.images.map(
+				(imageName: string) => `${imageBaseUrl}/${imageName}`
+			);
+
+			// Create a new product object with the image URLs included
+			return { ...product._doc, imageUrls };
+		});
 
 		res.status(StatusCode.OK).json({
-			products,
+			productsWithUrls,
 		});
 	} catch (e) {
 		next(e);

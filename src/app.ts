@@ -10,7 +10,7 @@ import usersRoute from './routes/usersRoute';
 import { StatusCode } from './constants/enums';
 import productsRoute from './routes/productsRoute';
 import multer from 'multer';
-import logger from './config/appUtil';
+import logger, { getRootPath } from './config/appUtil';
 
 const app = express();
 
@@ -18,6 +18,8 @@ const app = express();
 app.use(cors());
 
 app.use(bodyParser.json());
+// Set up middleware to serve static files from the 'public' directory
+app.use(Paths.RESOURCES, express.static(getRootPath(Paths.RESOURCE_DIR)));
 
 app.use(Paths.Products, productsRoute);
 
