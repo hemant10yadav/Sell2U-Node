@@ -5,12 +5,16 @@ import upload from '../configuration/multer';
 import { body } from 'express-validator';
 import { getMessage } from '../configuration/message';
 import { ProductCategory, ProductSubCategory } from '../util/enums';
+import isAuthenticatedReq from '../middleware/isAuthenticatedReq';
+import isSeller from '../middleware/isSeller';
 
 const router: Router = Router();
 
 router.post(
 	Paths.ADD,
-	upload.array('file'),
+	isAuthenticatedReq,
+	isSeller,
+	upload.array('images'),
 	[
 		body('name')
 			.trim()

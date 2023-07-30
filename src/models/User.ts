@@ -17,9 +17,9 @@ const User = new Schema(
 		orders: [{ type: Schema.Types.ObjectId, ref: SchemaName.ORDER }],
 		address: [
 			{
-				street: { type: String, required: true },
-				city: { type: String, required: true },
-				country: { type: String, required: true },
+				street: { type: String },
+				city: { type: String },
+				country: { type: String },
 			},
 		],
 		wishlist: [{ type: Schema.Types.ObjectId, ref: SchemaName.PRODUCT }],

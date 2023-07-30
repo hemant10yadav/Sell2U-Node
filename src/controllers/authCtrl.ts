@@ -28,6 +28,7 @@ export async function signup(
 			lastName: req.body.lastName,
 			username: req.body.username,
 			email: req.body.email,
+			role: req.body.role,
 			password: await bcryptjs.hash(req.body.password, 12),
 		});
 		logger.info(`Creating account for user with username ${req.body.username}`);

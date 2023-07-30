@@ -5,14 +5,10 @@ import { StatusCode } from '../util/enums';
 import { getMessage } from '../configuration/message';
 import { IProduct } from '../util/interfaces';
 import Product from '../models/product';
+import { Schema } from 'mongoose';
 import logger from '../util/logger';
-import { Multer } from 'multer';
 
-export async function addProduct(
-	req: Request,
-	res: Response,
-	next: NextFunction
-) {
+export async function addProduct(req: any, res: Response, next: NextFunction) {
 	try {
 		const errors = validationResult(req.body);
 		const files = req.files as Express.Multer.File[];
@@ -29,9 +25,15 @@ export async function addProduct(
 				(file: Express.Multer.File) => file.filename
 			);
 		}
+		productData.seller = req.userId as Schema.Types.ObjectId;
 		const product = new Product(productData);
 		await product.validate();
 		await product.save();
+		logger.info(`New product added having id ${product.id}`);
+		await product.populate('seller');
+		res.status(StatusCode.OK).json({
+			product,
+		});
 	} catch (e) {
 		next(e);
 	}
