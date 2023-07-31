@@ -52,3 +52,8 @@ export interface IProduct {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export interface IRequest extends Request {
+	userId: string;
+	username: string;
+}

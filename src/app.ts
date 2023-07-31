@@ -1,4 +1,4 @@
-import express, { Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import EnvConstants from './constants/envConstants';
@@ -28,10 +28,11 @@ app.use(Paths.Products, productsRoute);
 
 app.use(Paths.AUTH, authRoute);
 
+
 app.use(Paths.USERS, isCurrentUserValid, usersRoute);
 
 // Handle all the errors.
-app.use((err: any, req: express.Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 	if (err instanceof multer.MulterError) {
 		logger.error('INSTANCE OF multer.MulterError ');
 	}

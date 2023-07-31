@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken';
-import { NextFunction, Response } from 'express';
 import EnvConstants from '../constants/envConstants';
 import { handleException } from '../services/ErrorHandler';
 import { StatusCode } from '../constants/enums';
 import logger from '../config/appUtil';
+import { NextFunction, Response, Request } from 'express';
+import { loggers } from 'winston';
 
 export default function isCurrentUserValid(
-	req: any,
+	req: Request,
 	res: Response,
 	next: NextFunction
 ) {

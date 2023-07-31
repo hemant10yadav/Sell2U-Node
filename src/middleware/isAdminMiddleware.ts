@@ -1,11 +1,12 @@
-import { NextFunction, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import User from '../models/User';
 import { IUser } from '../constants/interfaces';
 import { Role, StatusCode } from '../constants/enums';
 import { handleException } from '../services/ErrorHandler';
+import { getMessage } from '../config/appUtil';
 
 export default async function isAdminMiddleware(
-	req: any,
+	req: Request,
 	res: Response,
 	next: NextFunction
 ): Promise<any> {
@@ -16,6 +17,6 @@ export default async function isAdminMiddleware(
 				next();
 			}
 		}
-		handleException(StatusCode.UNAUTHORIZED, 'Access Denied');
+		handleException(StatusCode.UNAUTHORIZED, getMessage('error.unauthorized'));
 	}
 }
