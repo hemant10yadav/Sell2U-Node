@@ -4,13 +4,14 @@ import mongoose from 'mongoose';
 import EnvConstants from './constants/envConstants';
 import authRoute from './routes/authRoute';
 import Paths from './constants/paths';
-import isAuthenticatedReq from './middleware/isAuthenticatedReq';
+import isCurrentUserValid from './middleware/isCurrentUserValid';
 import cors from 'cors';
 import usersRoute from './routes/usersRoute';
 import { StatusCode } from './constants/enums';
 import productsRoute from './routes/productsRoute';
 import multer from 'multer';
 import logger, { getRootPath } from './config/appUtil';
+import { setBaseUrlMiddleware } from './middleware/configMiddleware';
 
 const app = express();
 
@@ -18,6 +19,8 @@ const app = express();
 app.use(cors());
 
 app.use(bodyParser.json());
+
+app.use(setBaseUrlMiddleware);
 // Set up middleware to serve static files from the 'public' directory
 app.use(Paths.RESOURCES, express.static(getRootPath(Paths.RESOURCE_DIR)));
 
@@ -25,7 +28,7 @@ app.use(Paths.Products, productsRoute);
 
 app.use(Paths.AUTH, authRoute);
 
-app.use(Paths.USERS, isAuthenticatedReq, usersRoute);
+app.use(Paths.USERS, isCurrentUserValid, usersRoute);
 
 // Handle all the errors.
 app.use((err: any, req: express.Request, res: Response, next: NextFunction) => {

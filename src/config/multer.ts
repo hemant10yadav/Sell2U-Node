@@ -2,7 +2,7 @@ import multer, { MulterError } from 'multer';
 import { Request } from 'express';
 import { FileType, FileTypeError } from '../constants/enums';
 import EnvConstants from '../constants/envConstants';
-import { getMessage, getRootPath } from './appUtil';
+import logger, { getMessage, getRootPath } from './appUtil';
 
 const storage = multer.diskStorage({
 	destination(_req, _file, cb) {

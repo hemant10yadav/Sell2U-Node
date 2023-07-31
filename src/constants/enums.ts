@@ -67,11 +67,11 @@ export enum OrderStatus {
 }
 
 export enum SchemaName {
-	PRODUCT = 'Product',
-	USER = 'User',
+	PRODUCT = 'product',
+	USER = 'user',
 	SELLER = 'Seller',
-	ORDER = 'Order',
-	COUNTER = 'Counter'
+	ORDER = 'order',
+	COUNTER = 'counter',
 }
 
 export enum StatusCode {

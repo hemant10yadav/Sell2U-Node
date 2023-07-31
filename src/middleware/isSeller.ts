@@ -11,7 +11,6 @@ export default async function isSeller(
 	next: NextFunction
 ): Promise<any> {
 	try {
-		logger.error(req.userId);
 		if (req.userId) {
 			const user: IUser | null = await User.findById(req.userId);
 			if (user) {

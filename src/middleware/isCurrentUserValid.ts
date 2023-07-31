@@ -3,8 +3,9 @@ import { NextFunction, Response } from 'express';
 import EnvConstants from '../constants/envConstants';
 import { handleException } from '../services/ErrorHandler';
 import { StatusCode } from '../constants/enums';
+import logger from '../config/appUtil';
 
-export default function isAuthenticatedReq(
+export default function isCurrentUserValid(
 	req: any,
 	res: Response,
 	next: NextFunction
@@ -20,6 +21,7 @@ export default function isAuthenticatedReq(
 		}
 		req.username = decodedToken?.username;
 		req.userId = decodedToken?.userId;
+		logger.info('uservalisd');
 		next();
 	} catch (e: any) {
 		next(e);

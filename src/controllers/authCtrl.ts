@@ -36,13 +36,13 @@ export async function signup(
 
 		let counter = await Counter.findOne();
 		if (counter) {
-			newUserData.userId = counter.lastUserId + 1;
+			newUserData.userId = String(Number(counter.lastUserId) + 1);
 			counter.lastUserId = newUserData.userId;
 		} else {
-			newUserData.userId = 1;
+			newUserData.userId = '1';
 			counter = new Counter();
 			counter.lastUserId = newUserData.userId;
-			counter.lastProductId = 0;
+			counter.lastProductId = '0';
 		}
 		const user = await newUserData.save();
 		await counter.save();

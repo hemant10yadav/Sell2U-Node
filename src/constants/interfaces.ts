@@ -37,6 +37,7 @@ export interface IError extends Error {
 }
 
 export interface IProduct {
+	_id: Schema.Types.ObjectId;
 	productId: number;
 	name: string;
 	description: string;
@@ -47,7 +48,7 @@ export interface IProduct {
 	subcategory: ProductSubCategory;
 	quantity: number;
 	images?: string[];
-	seller: Schema.Types.ObjectId;
+	user: Schema.Types.ObjectId;
 	createdAt: Date;
 	updatedAt: Date;
 }

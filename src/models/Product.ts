@@ -1,9 +1,13 @@
 import mongoose, { Schema } from 'mongoose';
-import { ProductSubCategory, ProductCategory, SchemaName } from '../constants/enums';
+import {
+	ProductSubCategory,
+	ProductCategory,
+	SchemaName,
+} from '../constants/enums';
 
 const Product = new Schema(
 	{
-		productId: { type: Number, required: true, unique: true },
+		productId: { type: String, required: true, unique: true },
 		name: { type: String, required: true },
 		description: { type: String, required: true },
 		price: { type: Number, required: true },
@@ -21,7 +25,7 @@ const Product = new Schema(
 		},
 		quantity: { type: Number, required: true },
 		images: [{ type: String }],
-		seller: {
+		user: {
 			type: Schema.Types.ObjectId,
 			ref: SchemaName.USER,
 			required: true,
@@ -29,5 +33,4 @@ const Product = new Schema(
 	},
 	{ timestamps: true }
 );
-
 export default mongoose.model(SchemaName.PRODUCT, Product);

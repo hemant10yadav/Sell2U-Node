@@ -4,7 +4,7 @@ import { addProduct, getAllProducts } from '../controllers/productsCtrl';
 import upload from '../config/multer';
 import { body } from 'express-validator';
 import { ProductCategory, ProductSubCategory } from '../constants/enums';
-import isAuthenticatedReq from '../middleware/isAuthenticatedReq';
+import isCurrentUserValid from '../middleware/isCurrentUserValid';
 import isSeller from '../middleware/isSeller';
 import { getMessage } from '../config/appUtil';
 
@@ -14,7 +14,7 @@ router.get('', getAllProducts);
 
 router.post(
 	Paths.ADD,
-	isAuthenticatedReq,
+	isCurrentUserValid,
 	isSeller,
 	upload.array('images'),
 	[
