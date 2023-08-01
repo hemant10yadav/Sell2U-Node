@@ -10,11 +10,7 @@ import { IUser } from '../constants/interfaces';
 import Counter from '../models/Counter';
 import logger from '../config/appUtil';
 
-export async function signup(
-	req: Request,
-	res: Response,
-	next: NextFunction
-): Promise<any> {
+export async function signup(req: Request, res: Response, next: NextFunction) {
 	try {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -90,7 +86,7 @@ export async function resetPassword(
 	req: Request,
 	res: Response,
 	next: NextFunction
-): Promise<void> {
+) {
 	try {
 		const emailOrUsername = req.body.emailOrUsername;
 		const loadUser = await User.findOne({

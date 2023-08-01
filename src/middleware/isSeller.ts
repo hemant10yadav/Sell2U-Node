@@ -1,12 +1,11 @@
-import { NextFunction, Response } from 'express';
+import { NextFunction, Response, Request } from 'express';
 import User from '../models/User';
 import { IUser } from '../constants/interfaces';
 import { Role, StatusCode } from '../constants/enums';
 import { handleException } from '../services/ErrorHandler';
-import logger from '../config/appUtil';
 
 export default async function isSeller(
-	req: any,
+	req: Request,
 	res: Response,
 	next: NextFunction
 ): Promise<any> {

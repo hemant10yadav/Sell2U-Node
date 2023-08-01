@@ -1,25 +1,23 @@
 import mongoose, { Schema } from 'mongoose';
-import { OrderStatus } from '../constants/enums';
+import { OrderStatus, SchemaName } from '../constants/enums';
+import Product from './Product';
 
 const Order = new Schema(
 	{
-		user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+		user: { type: Schema.Types.ObjectId, ref: SchemaName.USER, required: true },
 		products: [
 			{
 				product: {
-					type: Schema.Types.ObjectId,
-					ref: 'Product',
+					type: Product,
 					required: true,
 				},
 				quantity: { type: Number, required: true },
-				price: { type: Number, required: true },
 			},
 		],
-		totalAmount: { type: Number, required: true },
 		status: {
 			type: String,
 			enum: OrderStatus,
-			default: OrderStatus.PENDING,
+			default: OrderStatus.ACCEPTED,
 		},
 	},
 	{ timestamps: true }

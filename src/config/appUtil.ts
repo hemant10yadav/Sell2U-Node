@@ -46,8 +46,7 @@ export function getMessage(key: string): string {
 	if (nestedMessage) {
 		return nestedMessage;
 	}
-	// This should never happen.
-	return 'Unexpected Error: Please come back again after some time.';
+	return key;
 }
 
 export function getRootPath(...segments: string[]): string {

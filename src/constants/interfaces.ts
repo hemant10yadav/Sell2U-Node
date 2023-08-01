@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { ProductCategory, ProductSubCategory, Role } from './enums';
 import { Schema } from 'mongoose';
 
@@ -25,11 +24,6 @@ export interface IAddress {
 	country: string;
 }
 
-export interface IAuthRequest extends Request {
-	userId: string;
-	username: string;
-}
-
 export interface IError extends Error {
 	statusCode?: number;
 
@@ -53,7 +47,6 @@ export interface IProduct {
 	updatedAt: Date;
 }
 
-export interface IRequest extends Request {
-	userId: string;
-	username: string;
+export interface IToJsonOptions {
+	resourceBaseUrl?: string;
 }

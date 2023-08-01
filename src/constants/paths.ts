@@ -8,8 +8,8 @@ export default class Paths {
 	public static Products = '/products';
 	public static RESOURCES = '/resources';
 	public static CURRENT = '/current';
-
 	public static WISHLIST = '/wishlist';
+	public static ORDER = '/order';
 
 	public static readonly RESOURCE_DIR = 'public/resources';
 }

@@ -28,7 +28,6 @@ app.use(Paths.Products, productsRoute);
 
 app.use(Paths.AUTH, authRoute);
 
-
 app.use(Paths.USERS, isCurrentUserValid, usersRoute);
 
 // Handle all the errors.

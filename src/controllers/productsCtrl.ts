@@ -1,4 +1,4 @@
-import { NextFunction, Response } from 'express';
+import { NextFunction, Response, Request } from 'express';
 import { validationResult } from 'express-validator/src/validation-result';
 import { handleException } from '../services/ErrorHandler';
 import { StatusCode } from '../constants/enums';
@@ -7,29 +7,17 @@ import Product from '../models/Product';
 import { Schema } from 'mongoose';
 import Counter from '../models/Counter';
 import logger, { getMessage } from '../config/appUtil';
-import Paths from '../constants/paths';
 import User from '../models/User';
 
 export async function getAllProducts(
-	req: any,
+	req: Request,
 	res: Response,
 	next: NextFunction
 ) {
 	try {
-		const imageBaseUrl = `${req.protocol}://${req.get('host')}/${
-			Paths.RESOURCES
-		}`;
 		const products = await Product.find();
-		const productsWithUrls = products.map((product: any) => {
-			const imageUrls = product.images.map(
-				(imageName: string) => `${imageBaseUrl}/${imageName}`
-			);
-
-			return { ...product._doc, imageUrls };
-		});
-
 		res.status(StatusCode.OK).json({
-			productsWithUrls,
+			products,
 		});
 	} catch (e) {
 		next(e);

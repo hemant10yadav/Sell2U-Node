@@ -1,4 +1,3 @@
-import { ErrorCode } from 'multer';
 
 export enum ProductCategory {
 	ELECTRONICS = 'Electronics',
@@ -62,6 +61,7 @@ export enum Role {
 
 export enum OrderStatus {
 	PENDING = 'Pending',
+	ACCEPTED = 'Accepted',
 	DELIVERED = 'Delivered',
 	SHIPPED = 'Shipped',
 }

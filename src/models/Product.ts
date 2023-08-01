@@ -4,6 +4,7 @@ import {
 	ProductCategory,
 	SchemaName,
 } from '../constants/enums';
+import { RESOURCE_BASE_URL } from '../middleware/configMiddleware';
 
 const Product = new Schema(
 	{
@@ -33,4 +34,16 @@ const Product = new Schema(
 	},
 	{ timestamps: true }
 );
+
+Product.set('toJSON', {
+	transform(doc, ret) {
+		const baseUrl = RESOURCE_BASE_URL;
+		if (baseUrl && ret.images) {
+			ret.images = ret.images.map((imageFileName: any) => {
+				return `${baseUrl}/${imageFileName}`;
+			});
+		}
+		return ret;
+	},
+});
 export default mongoose.model(SchemaName.PRODUCT, Product);
