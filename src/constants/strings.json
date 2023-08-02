@@ -27,6 +27,11 @@
 		"category": "The category field is required and must be one of the valid categories.",
 		"subcategory": "The subcategory field is required and must be one of the valid subcategories.",
 		"quantity": "The quantity field is required and must be a positive integer."
+	},
+	"email": {
+		"from": "The Sell2U Project",
+		"body": "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <title>Verify Your Email Address</title>\n  <style>\n    /* Add your email styles here */\n    body {\n      font-family: Arial, sans-serif;\n    }\n    .container {\n      max-width: 600px;\n      margin: 0 auto;\n      padding: 20px;\n      border: 1px solid #ccc;\n      border-radius: 5px;\n      background-color: #f9f9f9;\n    }\n    .button {\n      display: inline-block;\n      padding: 10px 20px;\n      background-color: #007bff;\n      color: #fff;\n      text-decoration: none;\n      border-radius: 5px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n  {bodyInfo}\n  </div>\n</body>\n</html>",
+		"signup": " <h1>Verify Your Email Address</h1>\n    <p>\n      Welcome to our e-commerce store! Please click the button below to verify your email address.\n    </p>\n    <p>\n      <a href=\"{{verificationLink}}\" class=\"button\">Verify Email Address</a>\n    </p>\n    <p>\n      If you didn't sign up for an account on our website, you can safely ignore this email.\n    </p>"
 	}
 }
 

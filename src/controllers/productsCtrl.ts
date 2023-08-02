@@ -8,6 +8,7 @@ import { Schema } from 'mongoose';
 import Counter from '../models/Counter';
 import logger, { getMessage } from '../config/appUtil';
 import User from '../models/User';
+import sendMail from '../services/email-service';
 
 export async function getAllProducts(
 	req: Request,
@@ -16,6 +17,14 @@ export async function getAllProducts(
 ) {
 	try {
 		const products = await Product.find();
+		sendMail(
+			'hemant.10.yadav@gmail.com',
+			'Welcome to Sell2U. Please verify your account.',
+			getMessage('email.signup').replace(
+				'{{verificationLink}}',
+				'www.google.com'
+			)
+		);
 		res.status(StatusCode.OK).json({
 			products,
 		});
@@ -65,6 +74,7 @@ export async function addProduct(req: any, res: Response, next: NextFunction) {
 			{ new: true }
 		);
 		logger.info(`New product added having id ${product.id}`);
+
 		res.status(StatusCode.OK).json({
 			product,
 		});

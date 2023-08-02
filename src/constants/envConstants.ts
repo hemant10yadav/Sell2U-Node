@@ -9,4 +9,8 @@ export default class EnvConstants {
 	// FILE_UPLOAD_SIZE_LIMIT_IN_BYTES = 1 MB.
 	public static readonly FILE_UPLOAD_SIZE_LIMIT_IN_BYTES = 1048576;
 	public static readonly MAX_FILES_TO_UPLOAD = 5;
+
+	public static readonly SMTP_PASS = 'zdxhhrbzqdrqxjpl';
+	public static readonly SMTP_USER = 'hy723207@gmail.com';
+	public static readonly SMTP_SERVER = 'gmail';
 }
