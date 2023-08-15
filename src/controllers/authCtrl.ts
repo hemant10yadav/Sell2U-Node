@@ -8,7 +8,9 @@ import { handleException } from '../services/ErrorHandler';
 import { StatusCode } from '../constants/enums';
 import { IUser } from '../constants/interfaces';
 import Counter from '../models/Counter';
-import logger from '../config/appUtil';
+import logger, { getMessage } from '../config/appUtil';
+import sendMail from '../services/email-service';
+import Paths from '../constants/paths';
 
 export async function signup(req: Request, res: Response, next: NextFunction) {
 	try {
@@ -42,10 +44,28 @@ export async function signup(req: Request, res: Response, next: NextFunction) {
 		}
 		const user = await newUserData.save();
 		await counter.save();
+		sendMail(
+			user.email,
+			'Welcome to Sell2U. Please verify your account.',
+			getMessage('email.signup').replace(
+				'{{verificationLink}}',
+				`${req.baseUrl}${Paths.AUTH}${Paths.VERIFY}?${generateEmailToken(user)}`
+			)
+		);
 		return res.status(StatusCode.CREATED).json(user);
 	} catch (err: any) {
 		next(err);
 	}
+}
+
+function generateEmailToken(user: any) {
+	return Jwt.sign(
+		{
+			username: user?.username,
+		},
+		EnvConstants.EMAIL_ENCRYPTION_KEY,
+		{ expiresIn: EnvConstants.TOKEN_EXPIRATION_TIME }
+	);
 }
 
 export async function login(
@@ -77,7 +97,7 @@ export async function login(
 			token,
 			user: restUser,
 		});
-	} catch (err: any) {
+	} catch (err: unknown) {
 		next(err);
 	}
 }

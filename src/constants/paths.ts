@@ -12,4 +12,5 @@ export default class Paths {
 	public static ORDER = '/order';
 
 	public static readonly RESOURCE_DIR = 'public/resources';
+	public static readonly VERIFY = '/verify';
 }

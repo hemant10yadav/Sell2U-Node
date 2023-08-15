@@ -4,7 +4,8 @@ import {
 	ProductCategory,
 	SchemaName,
 } from '../constants/enums';
-import { RESOURCE_BASE_URL } from '../middleware/configMiddleware';
+import { BASE_URL } from '../middleware/configMiddleware';
+import Paths from '../constants/paths';
 
 const Product = new Schema(
 	{
@@ -37,10 +38,10 @@ const Product = new Schema(
 
 Product.set('toJSON', {
 	transform(doc, ret) {
-		const baseUrl = RESOURCE_BASE_URL;
-		if (baseUrl && ret.images) {
+		const resourceBaseUrl = BASE_URL + Paths.RESOURCES;
+		if (resourceBaseUrl && ret.images) {
 			ret.images = ret.images.map((imageFileName: any) => {
-				return `${baseUrl}/${imageFileName}`;
+				return `${resourceBaseUrl}/${imageFileName}`;
 			});
 		}
 		return ret;

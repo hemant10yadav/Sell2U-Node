@@ -16,6 +16,8 @@ export interface IUser {
 	wishlist: Schema.Types.ObjectId[];
 	createdAt: Date;
 	updatedAt: Date;
+	verified: boolean;
+	emailVerificationToken: string;
 }
 
 export interface IAddress {

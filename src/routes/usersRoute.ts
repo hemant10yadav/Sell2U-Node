@@ -12,9 +12,15 @@ router.get(Paths.CURRENT, getCurrentUser);
 
 router.put(Paths.CURRENT, getCurrentUser);
 
-router.post(`${Paths.WISHLIST}/:productIdOrId`, updateWishlist(true));
+router.post(
+	`${Paths.CURRENT}${Paths.WISHLIST}/:productIdOrId`,
+	updateWishlist(true)
+);
 
-router.delete(`${Paths.WISHLIST}/:productIdOrId`, updateWishlist(false));
+router.delete(
+	`${Paths.CURRENT}${Paths.WISHLIST}/:productIdOrId`,
+	updateWishlist(false)
+);
 
 router.post(Paths.ORDER, placeOrder);
 

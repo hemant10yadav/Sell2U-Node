@@ -5,8 +5,6 @@ import { StatusCode } from '../constants/enums';
 import logger, { getMessage } from '../config/appUtil';
 import Product from '../models/Product';
 import { IProduct } from '../constants/interfaces';
-import { IRestOrder } from '../constants/restInterfaces';
-import Order from '../models/Order';
 
 export async function getCurrentUser(
 	req: Request,
