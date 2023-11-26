@@ -10,6 +10,7 @@ export default class Paths {
 	public static CURRENT = '/current';
 	public static WISHLIST = '/wishlist';
 	public static ORDER = '/order';
+	public static EMAIL = '/email';
 
 	public static readonly RESOURCE_DIR = 'public/resources';
 	public static readonly VERIFY = '/verify';

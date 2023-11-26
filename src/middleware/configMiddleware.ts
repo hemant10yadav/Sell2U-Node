@@ -7,7 +7,9 @@ export function setBaseUrlMiddleware(
 	res: Response,
 	next: NextFunction
 ) {
+	console.log(req.headers.referer);
 	BASE_URL = `${req.protocol}:/${req.get('host')}`;
+	console.log(BASE_URL);
 	req.baseUrl = BASE_URL;
 	next();
 }

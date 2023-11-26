@@ -49,7 +49,9 @@ export async function signup(req: Request, res: Response, next: NextFunction) {
 			'Welcome to Sell2U. Please verify your account.',
 			getMessage('email.signup').replace(
 				'{{verificationLink}}',
-				`${req.baseUrl}${Paths.AUTH}${Paths.VERIFY}?${generateEmailToken(user)}`
+				`${req.headers.referer}${Paths.USERS.replace('/', '')}${Paths.EMAIL}${
+					Paths.VERIFY
+				}?token=${generateEmailToken(user)}`
 			)
 		);
 		return res.status(StatusCode.CREATED).json(user);
@@ -58,7 +60,7 @@ export async function signup(req: Request, res: Response, next: NextFunction) {
 	}
 }
 
-function generateEmailToken(user: any) {
+const generateEmailToken = (user: any) => {
 	return Jwt.sign(
 		{
 			username: user?.username,
@@ -66,7 +68,7 @@ function generateEmailToken(user: any) {
 		EnvConstants.EMAIL_ENCRYPTION_KEY,
 		{ expiresIn: EnvConstants.TOKEN_EXPIRATION_TIME }
 	);
-}
+};
 
 export async function login(
 	req: Request,
@@ -74,8 +76,7 @@ export async function login(
 	next: NextFunction
 ): Promise<void> {
 	try {
-		const emailOrUsername = req.body.emailOrUsername;
-		const password = req.body.password;
+		const { emailOrUsername, password } = req.body;
 		const loadUser: IUser | null = await User.findOne({
 			$or: [{ email: emailOrUsername }, { username: emailOrUsername }],
 		});

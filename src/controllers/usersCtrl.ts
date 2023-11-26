@@ -5,6 +5,8 @@ import { StatusCode } from '../constants/enums';
 import logger, { getMessage } from '../config/appUtil';
 import Product from '../models/Product';
 import { IProduct } from '../constants/interfaces';
+import jwt from 'jsonwebtoken';
+import EnvConstants from '../constants/envConstants';
 
 export async function getCurrentUser(
 	req: Request,
@@ -13,7 +15,11 @@ export async function getCurrentUser(
 ) {
 	try {
 		if (req.userId) {
-			const user = await User.findById(req.userId).populate('products');
+			const user = await User.findById(req.userId).populate([
+				'products',
+				'wishlist',
+				'cart',
+			]);
 			logger.info(`Fetched the current user with Id ${req.userId}.`);
 			return res.status(StatusCode.OK).json(user);
 		}
@@ -107,4 +113,34 @@ export async function placeOrder(
 	// 			});
 	// 	}
 	// } catch (e: unknown) {}
+}
+
+export async function verifyEmail(
+	req: Request,
+	res: Response,
+	next: NextFunction
+) {
+	const token: string = req.query.token as string;
+	const decodedToken: any = jwt.verify(
+		token,
+		EnvConstants.EMAIL_ENCRYPTION_KEY
+	);
+	if (!decodedToken) {
+		handleException(StatusCode.BAD_REQUEST, getMessage('error.forbidden'));
+	}
+	if (req.username === decodedToken?.username) {
+		try {
+			const loadUser = await User.findByIdAndUpdate(
+				req.userId,
+				{ verified: true },
+				{ new: true }
+			);
+			logger.info(`email verification successful for ${req.username}`);
+			const restUser: any = structuredClone(loadUser);
+			delete restUser?.password;
+			return res.status(StatusCode.OK).json(restUser);
+		} catch (err) {
+			handleException(StatusCode.INTERNAL_SERVER_ERROR, 'error_ehile_saving');
+		}
+	}
 }
