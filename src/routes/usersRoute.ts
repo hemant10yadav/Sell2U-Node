@@ -3,6 +3,7 @@ import {
 	getCurrentUser,
 	placeOrder,
 	updateWishlist,
+	verifyEmail,
 } from '../controllers/usersCtrl';
 import Paths from '../constants/paths';
 
@@ -10,7 +11,7 @@ const router: Router = Router();
 
 router.get(Paths.CURRENT, getCurrentUser);
 
-router.put(Paths.CURRENT, getCurrentUser);
+router.post(`${Paths.EMAIL}${Paths.VERIFY}`, verifyEmail);
 
 router.post(
 	`${Paths.CURRENT}${Paths.WISHLIST}/:productIdOrId`,
