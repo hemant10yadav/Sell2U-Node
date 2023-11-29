@@ -140,7 +140,11 @@ export async function verifyEmail(
 			delete restUser?.password;
 			return res.status(StatusCode.OK).json(restUser);
 		} catch (err) {
-			handleException(StatusCode.INTERNAL_SERVER_ERROR, 'error_ehile_saving');
+			logger.info(`Error while updating user ${req.username}`);
+			handleException(StatusCode.UNAUTHORIZED, 'error.somethingWentWrong');
 		}
+	} else {
+		logger.info(`Invalid token ${req.username}`);
+		handleException(StatusCode.UNAUTHORIZED, 'error.invalidToken');
 	}
 }
