@@ -17,18 +17,30 @@ const User = new Schema(
 			default: Role.CUSTOMER,
 		},
 		cart: [{ type: Schema.Types.ObjectId, ref: SchemaName.PRODUCT }],
-		orders: [
-			{ type: Schema.Types.ObjectId, ref: SchemaName.ORDER, unique: true },
-		],
+		orders: {
+			type: [
+				{
+					type: Schema.Types.ObjectId,
+					ref: SchemaName.ORDER,
+				},
+			],
+			sparse: true,
+		},
+		wishlist: {
+			type: [
+				{
+					type: Schema.Types.ObjectId,
+					ref: SchemaName.PRODUCT,
+				},
+			],
+			sparse: true,
+		},
 		address: [
 			{
 				street: { type: String },
 				city: { type: String },
 				country: { type: String },
 			},
-		],
-		wishlist: [
-			{ type: Schema.Types.ObjectId, ref: SchemaName.PRODUCT, unique: true },
 		],
 		products: [{ type: Schema.Types.ObjectId, ref: SchemaName.PRODUCT }],
 	},

@@ -18,7 +18,8 @@
 		"notImplemented": "Not Implemented: The requested functionality is not implemented.",
 		"fileSizeExceeded": "File Limit Exceeded: File size should be below 1MB.",
 		"wrongFileType": "Wrong File Type: Only JPEG and PNG file types are allowed.",
-		"wishlistProductPresent": "Product is already in your wishlist."
+		"wishlistProductPresent": "Product is already in your wishlist.",
+		"invalidToken": "Invalid Token"
 	},
 	"productFieldError": {
 		"name": "The name field is required and must be between 5 and 50 characters long.",

@@ -45,6 +45,14 @@ router.post(
 
 router.post(Paths.LOGIN, login);
 
-router.post(Paths.RESET_PASSWORD, resetPassword);
+router.post(
+	Paths.RESET_PASSWORD,
+	[body('email').isEmail().withMessage('Enter a valid email address.')],
+	body('newPassword')
+		.trim()
+		.isLength({ min: 5 })
+		.withMessage('Enter a valid password.'),
+	resetPassword
+);
 
 export default router;
