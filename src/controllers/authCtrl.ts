@@ -49,22 +49,29 @@ const updateCounter = async (newUserData: any) => {
 	await counter.save();
 };
 
-const generateToken = (user: any, tokenFor: 'email' | 'password') => {
+const generateToken = (
+	user: any,
+	tokenFor: 'email' | 'password' | 'login'
+): string => {
 	let key: string;
 	let time: string;
 	switch (tokenFor) {
 		case 'email':
 			key = EnvConstants.EMAIL_ENCRYPTION_KEY;
-			time = EnvConstants.TOKEN_EXPIRATION_TIME;
+			time = EnvConstants.LOGIN_TOKEN_EXPIRATION_TIME;
 			break;
 		case 'password':
 			key = EnvConstants.RESET_PASSWORD_ENCRYPTION_KEY;
 			time = EnvConstants.RESET_TOKEN_EXPIRATION_TIME;
 			break;
+		case 'login':
+			key = EnvConstants.LOGIN_ENCRYPTION_KEY;
+			time = EnvConstants.LOGIN_TOKEN_EXPIRATION_TIME;
 	}
 	return Jwt.sign(
 		{
 			username: user?.username,
+			userId: user?._id.toString(),
 		},
 		key,
 		{ expiresIn: time }
@@ -84,20 +91,10 @@ const login = async (
 		if (!loadUser || !(await bcryptjs.compare(password, loadUser.password))) {
 			handleException(StatusCode.BAD_REQUEST, 'Wrong credentials');
 		}
-		const token: string = Jwt.sign(
-			{
-				username: loadUser?.username,
-				userId: loadUser?._id.toString(),
-			},
-			EnvConstants.PASSWORD_ENCRYPTION_KEY,
-			{ expiresIn: EnvConstants.TOKEN_EXPIRATION_TIME }
-		);
-		const restUser = JSON.parse(JSON.stringify(loadUser));
-		delete restUser.password;
-		logger.info(`Login successfully done for ${req.body.emailOrUsername}`);
+		logger.info(`Login successfully done for ${loadUser?.username}`);
 		res.status(StatusCode.OK).json({
-			token,
-			user: restUser,
+			token: generateToken(loadUser, 'login'),
+			user: loadUser,
 		});
 	} catch (err: unknown) {
 		next(err);

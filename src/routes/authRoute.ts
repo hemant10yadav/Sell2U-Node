@@ -18,27 +18,10 @@ router.post(
 					}
 				});
 			}),
-		body('username').custom((value, { req }) => {
-			return User.findOne({ username: value }).then((user) => {
-				if (user) {
-					return Promise.reject('Username already exist.');
-				}
-			});
-		}),
 		body('password')
 			.trim()
 			.isLength({ min: 5 })
 			.withMessage('Enter a valid password.'),
-		body('firstName')
-			.trim()
-			.not()
-			.isEmpty()
-			.withMessage('First name is required'),
-		body('lastName')
-			.trim()
-			.not()
-			.isEmpty()
-			.withMessage('Last name is required'),
 	],
 	signup
 );
@@ -54,5 +37,25 @@ router.post(
 		.withMessage('Enter a valid password.'),
 	resetPassword
 );
+
+const Validators = {
+	firstName: body('firstName')
+		.trim()
+		.not()
+		.isEmpty()
+		.withMessage('First name is required'),
+	lastName: body('lastName')
+		.trim()
+		.not()
+		.isEmpty()
+		.withMessage('Last name is required'),
+	username: body('username').custom((value, { req }) => {
+		return User.findOne({ username: value }).then((user) => {
+			if (user) {
+				return Promise.reject('Username already exist.');
+			}
+		});
+	}),
+};
 
 export default router;

@@ -14,7 +14,7 @@ export default function isCurrentUserValid(
 		const token = req.get('Authorization')?.split(' ')[1];
 		let decodedToken: any;
 		if (token) {
-			decodedToken = jwt.verify(token, EnvConstants.PASSWORD_ENCRYPTION_KEY);
+			decodedToken = jwt.verify(token, EnvConstants.LOGIN_ENCRYPTION_KEY);
 		}
 		if (!decodedToken) {
 			handleException(StatusCode.BAD_REQUEST, getMessage('error.forbidden'));
